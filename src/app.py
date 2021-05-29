@@ -1,7 +1,8 @@
 import os
 from typing import *
-
+from itertools import islice
 from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.model_selection import train_test_split
 
 subject_files_prefix = "subj."
 label_files_prefix = "label.3class."
@@ -10,6 +11,9 @@ data_path = "../data"
 negative_sentiment = 0
 neutral_sentiment = 1
 positive_sentiment = 2
+
+train_size = 0.8
+test_size = 0.2
 
 
 def get_list_of_files(dir_name) -> List[str]:
@@ -96,10 +100,16 @@ def get_data():
     return data
 
 
+def split_data(data: Dict[str, int]):
+    data_tuples = [(v, k) for k, v in data.items()]
+    train, test = train_test_split(data_tuples, test_size=test_size, train_size=train_size)
+    return train, test
+
+
 if __name__ == "__main__":
     # subject_files = get_subject_files()
     # reviews_dict = read_reviews(subject_files)
     # all_reviews = sum(reviews_dict.values(), [])
     # print(count_subjects(all_reviews))
     data = get_data()
-    print(data)
+    train_data, test_data = split_data(data)
