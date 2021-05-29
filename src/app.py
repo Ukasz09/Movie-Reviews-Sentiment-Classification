@@ -1,6 +1,7 @@
 from typing import *
 from sklearn.model_selection import train_test_split
 from src.dataUtils import *
+from src.dataAnalysis import *
 
 negative_sentiment = 0
 neutral_sentiment = 1
@@ -32,9 +33,13 @@ def split_data(data: Dict[str, int]) -> Tuple[Dict[str, int], Dict[str, int]]:
 
 
 if __name__ == "__main__":
-    # subject_files = get_subject_files()
-    # reviews_dict = read_reviews(subject_files)
-    # all_reviews = sum(reviews_dict.values(), [])
-    # print(count_subjects(all_reviews))
-    data = get_data()
-    train_data, test_data = split_data(data)
+    # data = get_data()
+    # train_data, test_data = split_data(data)
+
+    # Dataset analysis
+    # count_words_all()
+    # count_words_per_author()
+    # calc_length_all()
+    # calc_length_per_author()
+    count_labels_all()
+    count_labels_per_author()

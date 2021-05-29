@@ -64,3 +64,9 @@ def read_labels() -> Dict[str, List[int]]:
             labels = [int(label_str) for label_str in f.readlines()]
             labels_dict[author] = labels
     return labels_dict
+
+
+def save_dict(dict: Dict[Any, Any], filepath: str) -> None:
+    with open(filepath, 'w') as f:
+        for key in dict.keys():
+            f.write("%s,%s\n" % (key, dict[key]))
