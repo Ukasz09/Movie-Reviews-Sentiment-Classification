@@ -82,5 +82,27 @@ def count_labels_per_author() -> None:
         print("Correct saved data to: " + filepath)
 
 
+def _calc_words_qty(reviews: List[str], filepath: str) -> None:
+    words_qty = [len(review.split(" ")) for review in reviews]
+    result = {"avg": mean(words_qty), "min": min(words_qty), "max": max(words_qty)}
+    save_dict(result, filepath)
+    print("Correct saved data to: " + filepath)
+
+
+def words_qty_per_sentence_all() -> None:
+    reviews_per_author = read_reviews()
+    all_reviews = sum(reviews_per_author.values(), [])
+    filepath = analysisOutDir + "/words-qty-all.csv"
+    _calc_words_qty(all_reviews, filepath)
+
+
+def words_qty_per_sentence_and_author() -> None:
+    reviews_per_author = read_reviews()
+    for author in reviews_per_author.keys():
+        filepath = analysisOutDir + "/words-qty-" + author + ".csv"
+        reviews = reviews_per_author[author]
+        _calc_words_qty(reviews, filepath)
+
+
 def _sort_dictionary_desc(dictionary: Dict[Any, Any]) -> Dict[Any, Any]:
     return dict(sorted(dictionary.items(), key=lambda item: item[1], reverse=True))
