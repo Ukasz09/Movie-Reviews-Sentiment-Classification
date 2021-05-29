@@ -10,7 +10,7 @@ train_size = 0.8
 test_size = 0.2
 
 
-def get_data():
+def get_data() -> Dict[str, int]:
     """
     :return: Dictionary (sentence, sentiment)
     """
@@ -25,7 +25,7 @@ def get_data():
     return data
 
 
-def split_data(data: Dict[str, int]):
+def split_data(data: Dict[str, int]) -> Tuple[Dict[str, int], Dict[str, int]]:
     data_tuples = [(v, k) for k, v in data.items()]
     train, test = train_test_split(data_tuples, test_size=test_size, train_size=train_size)
     return train, test

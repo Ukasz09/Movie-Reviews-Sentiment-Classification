@@ -6,7 +6,7 @@ label_files_prefix = "label.3class."
 data_path = "../data"
 
 
-def _get_list_of_files(dir_name) -> List[str]:
+def _get_list_of_files(dir_name: str) -> List[str]:
     list_of_file = os.listdir(dir_name)
     all_files = list()
     for entry in list_of_file:
@@ -22,7 +22,7 @@ def _is_review_file(path: str) -> bool:
     return path.split("/")[-1].startswith(subject_files_prefix)
 
 
-def _is_label_file(path):
+def _is_label_file(path: str) -> bool:
     return path.split("/")[-1].startswith(label_files_prefix)
 
 
@@ -31,7 +31,7 @@ def _get_review_files() -> Iterator:
     return filter(lambda path: _is_review_file(path), files_paths)
 
 
-def _get_label_files():
+def _get_label_files() -> Iterator:
     files_paths = _get_list_of_files(data_path)
     return filter(lambda path: _is_label_file(path), files_paths)
 
