@@ -1,6 +1,5 @@
 from typing import *
 from sklearn.model_selection import train_test_split
-from src.dataUtils import *
 from src.dataAnalysis import *
 
 negative_sentiment = 0
@@ -37,11 +36,11 @@ if __name__ == "__main__":
     # train_data, test_data = split_data(data)
 
     # Dataset analysis
-    # count_words_all()
-    # count_words_per_author()
+    count_words_all()
+    count_words_per_author()
     # calc_length_all()
     # calc_length_per_author()
     # count_labels_all()
     # count_labels_per_author()
-    words_qty_per_sentence_all()
-    words_qty_per_sentence_and_author()
+    # words_qty_per_sentence_all()
+    # words_qty_per_sentence_and_author()

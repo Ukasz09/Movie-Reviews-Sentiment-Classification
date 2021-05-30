@@ -1,10 +1,15 @@
 import string
 from statistics import mean
+import nltk
 from typing import *
+from nltk.corpus import stopwords
+from sklearn.feature_extraction.text import CountVectorizer
 
 from src.dataUtils import *
 
 analysisOutDir = "../dataset-analysis"
+nltk.download('stopwords')
+stop = set(stopwords.words('english'))
 
 
 def _count_words(reviews_list) -> Dict[str, int]:
@@ -12,7 +17,8 @@ def _count_words(reviews_list) -> Dict[str, int]:
     words = [item for sublist in list_of_lists for item in sublist]
     words_no_punctuation = [_remove_punctuations(word) for word in words]
     words_no_punctuation = list(filter(lambda word: len(word) > 0, words_no_punctuation))
-    counts = Counter(words_no_punctuation)
+    words_no_stop_points = list(filter(lambda word: word not in stop, words_no_punctuation))
+    counts = Counter(words_no_stop_points)
     return counts
 
 
@@ -24,7 +30,6 @@ def count_words_all() -> None:
     reviews_per_author = read_reviews()
     all_reviews = sum(reviews_per_author.values(), [])
     count_result = _count_words(all_reviews)
-
     sorted_count_result = _sort_dictionary_desc(count_result)
     save_dict(sorted_count_result, analysisOutDir + "/count-words-all.csv")
     print("Correct saved data - count all words")
