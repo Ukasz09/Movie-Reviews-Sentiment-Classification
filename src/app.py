@@ -1,5 +1,4 @@
 from typing import *
-from sklearn.model_selection import train_test_split
 from src.dataAnalysis import *
 
 negative_sentiment = 0
@@ -25,22 +24,25 @@ def get_data() -> Dict[str, int]:
     return data
 
 
-def split_data(data: Dict[str, int]) -> Tuple[Dict[str, int], Dict[str, int]]:
-    data_tuples = [(v, k) for k, v in data.items()]
-    train, test = train_test_split(data_tuples, test_size=test_size, train_size=train_size)
-    return train, test
+def get_vectorizer(reviews_list):
+    vectorizer = CountVectorizer()
+    vectorizer.fit(reviews_list)
+    return vectorizer
 
 
 if __name__ == "__main__":
-    # data = get_data()
-    # train_data, test_data = split_data(data)
+    # CountVectorizer
+    reviews_per_author = read_reviews()
+    all_reviews = sum(reviews_per_author.values(), [])
+    data = get_vectorizer(all_reviews)
+    vocabulary = data.vocabulary_
 
     # Dataset analysis
     count_words_all()
     count_words_per_author()
-    # calc_length_all()
-    # calc_length_per_author()
-    # count_labels_all()
-    # count_labels_per_author()
-    # words_qty_per_sentence_all()
-    # words_qty_per_sentence_and_author()
+    calc_length_all()
+    calc_length_per_author()
+    count_labels_all()
+    count_labels_per_author()
+    words_qty_per_sentence_all()
+    words_qty_per_sentence_and_author()
