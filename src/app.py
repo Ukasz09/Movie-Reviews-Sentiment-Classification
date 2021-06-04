@@ -1,7 +1,7 @@
-from typing import *
 from src.dataAnalysis import *
 from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes import MultinomialNB
+from sklearn import metrics
 
 negative_sentiment = 0
 neutral_sentiment = 1
@@ -26,12 +26,23 @@ def read_data() -> Tuple[List[str], List[int]]:
     return all_reviews, all_sentiments
 
 
+def predict_with_bayes(X_train, y_train):
+    MNB = MultinomialNB()
+    MNB.fit(X_train, y_train)
+    return MNB.predict(X_test)
+
+
 if __name__ == "__main__":
-    X, Y = read_data()
-    X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=test_size)
     cv = CountVectorizer(stop_words='english')
-    cvFitTrans = cv.fit_transform(X_train)
-    cvTestTrans = cv.transform(X_test)
+    X_raw, y_raw = read_data()
+    X_train_raw, X_test_raw, y_train, y_test = train_test_split(X_raw, y_raw, test_size=test_size)
+    X_train = cv.fit_transform(X_train_raw)
+    X_test = cv.transform(X_test_raw)
+
+    y_predicted = predict_with_bayes(X_train, y_train)
+
+    accuracy_score = metrics.accuracy_score(y_predicted, y_test)
+    print(str('{:04.2f}'.format(accuracy_score * 100)) + '%')
 
     # Dataset analysis
     # count_words_all()
