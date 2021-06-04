@@ -109,5 +109,16 @@ def words_qty_per_sentence_and_author() -> None:
         _calc_words_qty(reviews, filepath)
 
 
+def make_analysis():
+    count_words_all()
+    count_words_per_author()
+    calc_length_all()
+    calc_length_per_author()
+    count_labels_all()
+    count_labels_per_author()
+    words_qty_per_sentence_all()
+    words_qty_per_sentence_and_author()
+
+
 def _sort_dictionary_desc(dictionary: Dict[Any, Any]) -> Dict[Any, Any]:
     return dict(sorted(dictionary.items(), key=lambda item: item[1], reverse=True))

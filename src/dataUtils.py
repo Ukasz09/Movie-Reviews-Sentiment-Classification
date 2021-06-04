@@ -70,3 +70,19 @@ def save_dict(dict: Dict[Any, Any], filepath: str) -> None:
     with open(filepath, 'w') as f:
         for key in dict.keys():
             f.write("%s,%s\n" % (key, dict[key]))
+
+
+def read_data() -> Tuple[List[str], List[int]]:
+    """
+    :return: (sentence_list, sentiment_list)
+    """
+    reviews_per_author = read_reviews()
+    labels_per_author = read_labels()
+    all_reviews = []
+    all_sentiments = []
+    for author in reviews_per_author.keys():
+        reviews = reviews_per_author[author]
+        labels = labels_per_author[author]
+        all_reviews += reviews
+        all_sentiments += labels
+    return all_reviews, all_sentiments
