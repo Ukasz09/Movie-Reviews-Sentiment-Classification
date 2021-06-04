@@ -26,10 +26,10 @@ def read_data() -> Tuple[List[str], List[int]]:
     return all_reviews, all_sentiments
 
 
-def predict_with_bayes(X_train, y_train):
-    MNB = MultinomialNB()
-    MNB.fit(X_train, y_train)
-    return MNB.predict(X_test)
+def predict_with_bayes(X_train, X_test, y_train):
+    mnb = MultinomialNB()
+    mnb.fit(X_train, y_train)
+    return mnb.predict(X_test)
 
 
 if __name__ == "__main__":
@@ -39,7 +39,7 @@ if __name__ == "__main__":
     X_train = cv.fit_transform(X_train_raw)
     X_test = cv.transform(X_test_raw)
 
-    y_predicted = predict_with_bayes(X_train, y_train)
+    y_predicted = predict_with_bayes(X_train, X_test, y_train)
 
     accuracy_score = metrics.accuracy_score(y_predicted, y_test)
     print(str('{:04.2f}'.format(accuracy_score * 100)) + '%')
