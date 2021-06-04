@@ -1,7 +1,7 @@
 from src.dataAnalysis import *
 from sklearn.model_selection import train_test_split, KFold
 from sklearn.naive_bayes import MultinomialNB
-from sklearn import metrics
+from sklearn import metrics, svm
 
 negative_sentiment = 0
 neutral_sentiment = 1
@@ -28,6 +28,12 @@ def predict_with_bayes(X_train, X_test, y_train):
     mnb = MultinomialNB()
     mnb.fit(X_train, y_train)
     return mnb.predict(X_test)
+
+
+def predict_with_svm(X_train, X_test, y_train):
+    classifier_linear = svm.SVC(kernel='linear')
+    classifier_linear.fit(X_train, y_train)
+    return classifier_linear.predict(X_test)
 
 
 def split_normal(test_size=0.2):
@@ -73,4 +79,9 @@ def predict_with_k_cross_validation(X_raw, y_raw, predict_func, k_fold_groups=10
 
 if __name__ == "__main__":
     X_raw, y_raw = read_data()
+
+    print("Predictions with Naive Bayes Algorithm\n")
     predict_with_k_cross_validation(X_raw, y_raw, predict_with_bayes)
+
+    print("Predictions with SVM Algorithm\n")
+    predict_with_k_cross_validation(X_raw, y_raw, predict_with_svm)
