@@ -42,11 +42,19 @@ def get_from_raw(raw, indexes):
     return data
 
 
-if __name__ == "__main__":
-    cv = CountVectorizer(stop_words='english')
-    X_raw, y_raw = read_data()
+def make_analysis():
+    count_words_all()
+    count_words_per_author()
+    calc_length_all()
+    calc_length_per_author()
+    count_labels_all()
+    count_labels_per_author()
+    words_qty_per_sentence_all()
+    words_qty_per_sentence_and_author()
 
-    k_fold_groups = 10
+
+def predict_with_k_cross_validation(X_raw, y_raw, predict_func, k_fold_groups=10):
+    cv = CountVectorizer(stop_words='english')
     k_fold = KFold(k_fold_groups, shuffle=True)
     accuracy_sum = 0
     i = 0
@@ -54,7 +62,7 @@ if __name__ == "__main__":
         X_train_raw, X_test_raw = get_from_raw(X_raw, train_indexes), get_from_raw(X_raw, test_indexes)
         y_train, y_test = get_from_raw(y_raw, train_indexes), get_from_raw(y_raw, test_indexes)
         X_train, X_test = cv.fit_transform(X_train_raw), cv.transform(X_test_raw)
-        y_predicted = predict_with_bayes(X_train, X_test, y_train)
+        y_predicted = predict_func(X_train, X_test, y_train)
         accuracy_score = metrics.accuracy_score(y_predicted, y_test)
         accuracy_sum += accuracy_score
         i += 1
@@ -62,12 +70,7 @@ if __name__ == "__main__":
     mean_accuracy = accuracy_sum / k_fold_groups
     print('\n', str('Mean accuracy = {:04.2f}'.format(mean_accuracy * 100)) + '%')
 
-    # Dataset analysis
-    # count_words_all()
-    # count_words_per_author()
-    # calc_length_all()
-    # calc_length_per_author()
-    # count_labels_all()
-    # count_labels_per_author()
-    # words_qty_per_sentence_all()
-    # words_qty_per_sentence_and_author()
+
+if __name__ == "__main__":
+    X_raw, y_raw = read_data()
+    predict_with_k_cross_validation(X_raw, y_raw, predict_with_bayes)
