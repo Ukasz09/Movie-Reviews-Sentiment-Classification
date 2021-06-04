@@ -1,9 +1,7 @@
 import string
 from statistics import mean
 import nltk
-from typing import *
 from nltk.corpus import stopwords
-from sklearn.feature_extraction.text import CountVectorizer
 
 from src.dataUtils import *
 

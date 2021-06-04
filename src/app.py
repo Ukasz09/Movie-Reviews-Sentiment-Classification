@@ -1,4 +1,4 @@
-from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
 
 from src.dataAnalysis import *
 from sklearn.model_selection import KFold
